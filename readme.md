@@ -69,19 +69,20 @@ Response: 201 (Created) Com id do recurso criado no atributo Location do header 
 
 Request:
 
-	POST http://localhost:8080/v1/pauta/{pautaId}/associado/{associadoId}/votar
+	POST http://localhost:8080/v1/sessao/{sessaoId}/votar
 
 Body:
 
 ```json
 {
-  "voto": "NAO"
+  "associadoId": "784ef9e0-8f06-4a35-a7f1-30d42ee65c80",
+  "voto": "SIM"
 }
 ```
 
 Response: 201 (Created) Com id do recurso criado no atributo Location do header da resposta:
 
-	ex: Location → http://localhost:8080/v1/pauta/a5715fc0-8be7-4f49-8a71-57b5e7c570dc/associado/784ef9e0-8f06-4a35-a7f1-30d42ee65c80/votar/f072bd16-bcee-4b73-9a8a-3d6c6075ba03
+	ex: Location → http://localhost:8080/v1/sessao/972b5af9-411a-43db-b746-6f8f14180be7/votar/5c44740e-fd24-46ae-8b98-ff02db902d5c 
 
 ## Endpoint para visualizar o resultado de uma sessão encerrado
 

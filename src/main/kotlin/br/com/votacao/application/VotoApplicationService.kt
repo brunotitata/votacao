@@ -21,13 +21,13 @@ class VotoApplicationService(
     private val userPort: UserPort
 ) {
 
-    fun novoVoto(pautaId: UUID, voto: VotoDTO, associadoId: UUID): UUID {
+    fun novoVoto(pautaId: UUID, voto: VotoDTO): UUID {
 
         val pauta = pautaRepository.buscarPautaPorId(pautaId) ?: throw PautaException(
             msg = "Pauta não encontrado",
             httpStatus = HttpStatus.NOT_FOUND
         )
-        val associado = associadoRepository.buscarAssociado(associadoId)
+        val associado = associadoRepository.buscarAssociado(voto.associadoId)
             ?: throw AssociadoException(
                 msg = "Associado não encontrado",
                 httpStatus = HttpStatus.NOT_FOUND

@@ -6,7 +6,6 @@ import br.com.votacao.domain.DomainRegistry
 import br.com.votacao.domain.pauta.Pauta
 import br.com.votacao.domain.pauta.PautaCriadoEvent
 import br.com.votacao.domain.pauta.PautaRepository
-import br.com.votacao.domain.sessao.SessaoRepository
 import br.com.votacao.port.adapters.controller.dto.PautaDTO
 import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.AnnotationSpec
@@ -21,12 +20,8 @@ class PautaApplicationServiceTest : AnnotationSpec() {
 
     private val publisher = mockk<DomainEventPublisher>()
     private val pautaRepository = mockk<PautaRepository>()
-    private val sessaoRepository = mockk<SessaoRepository>()
-    private val votoApplicationService = mockk<VotoApplicationService>()
     private val pautaApplicationService = PautaApplicationService(
         pautaRepository,
-        sessaoRepository,
-        votoApplicationService
     )
 
     override fun beforeSpec(spec: Spec) {
@@ -36,9 +31,7 @@ class PautaApplicationServiceTest : AnnotationSpec() {
     @BeforeEach
     fun setUp() = clearMocks(
         publisher,
-        pautaRepository,
-        sessaoRepository,
-        votoApplicationService
+        pautaRepository
     )
 
 
@@ -65,9 +58,7 @@ class PautaApplicationServiceTest : AnnotationSpec() {
 
         confirmVerified(
             publisher,
-            pautaRepository,
-            sessaoRepository,
-            votoApplicationService
+            pautaRepository
         )
     }
 
@@ -91,9 +82,7 @@ class PautaApplicationServiceTest : AnnotationSpec() {
 
         confirmVerified(
             publisher,
-            pautaRepository,
-            sessaoRepository,
-            votoApplicationService
+            pautaRepository
         )
     }
 
@@ -121,9 +110,7 @@ class PautaApplicationServiceTest : AnnotationSpec() {
 
         confirmVerified(
             publisher,
-            pautaRepository,
-            sessaoRepository,
-            votoApplicationService
+            pautaRepository
         )
     }
 }

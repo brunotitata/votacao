@@ -32,24 +32,4 @@ class PautaController(
         ).build()
     }
 
-    @PostMapping("/{pautaId}/associado/{associadoId}/votar")
-    @Operation(summary = "Endpoint responsavel por realizar a votação por uma pauta especifica")
-    fun votar(@PathVariable pautaId: UUID, @PathVariable associadoId: UUID, @RequestBody voto: VotoDTO): ResponseEntity<Void> {
-
-        val votoId = pautaApplicationService.votar(
-                pautaId = pautaId,
-                associadoId = associadoId,
-                voto = voto
-        )
-
-        return ResponseEntity.created(
-                ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/{votoId}")
-                        .buildAndExpand(votoId)
-                        .toUri()
-        ).build()
-    }
-
-
 }

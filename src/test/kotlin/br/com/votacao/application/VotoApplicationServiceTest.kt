@@ -66,6 +66,7 @@ class VotoApplicationServiceTest : AnnotationSpec() {
             nome = "Eduardo Silva",
             cpf = "20031813003"
         )
+        val votoDTO = VotoDTO(voto = VotoEnum.NAO, associadoId = associadoId)
 
         every { publisher.publish(any()) } returns Unit
         every { pautaRepository.buscarPautaPorId(pautaId) } returns pauta
@@ -76,8 +77,7 @@ class VotoApplicationServiceTest : AnnotationSpec() {
 
         val novoVoto = votoApplicationService.novoVoto(
             pautaId = pautaId,
-            voto = VotoDTO(VotoEnum.NAO),
-            associadoId = associadoId
+            voto = votoDTO
         )
 
         voto.captured.voto.shouldBe(VotoEnum.NAO)
@@ -119,8 +119,7 @@ class VotoApplicationServiceTest : AnnotationSpec() {
         assertThrows<PautaException> {
             votoApplicationService.novoVoto(
                 pautaId = pautaId,
-                voto = VotoDTO(VotoEnum.NAO),
-                associadoId = associadoId
+                voto = VotoDTO(voto = VotoEnum.NAO, associadoId = associadoId),
             )
         }.shouldBe(
             PautaException(
@@ -169,8 +168,7 @@ class VotoApplicationServiceTest : AnnotationSpec() {
         assertThrows<AssociadoException> {
             votoApplicationService.novoVoto(
                 pautaId = pautaId,
-                voto = VotoDTO(VotoEnum.NAO),
-                associadoId = associadoId
+                voto = VotoDTO(voto = VotoEnum.NAO, associadoId = associadoId),
             )
         }.shouldBe(
             AssociadoException(
@@ -220,8 +218,7 @@ class VotoApplicationServiceTest : AnnotationSpec() {
         assertThrows<AssociadoException> {
             votoApplicationService.novoVoto(
                 pautaId = pautaId,
-                voto = VotoDTO(VotoEnum.NAO),
-                associadoId = associadoId
+                voto = VotoDTO(voto = VotoEnum.NAO, associadoId = associadoId),
             )
         }.shouldBe(
             AssociadoException(

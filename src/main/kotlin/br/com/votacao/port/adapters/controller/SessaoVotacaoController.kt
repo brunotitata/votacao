@@ -3,6 +3,7 @@ package br.com.votacao.port.adapters.controller
 import br.com.votacao.application.SessaoVotacaoApplicationService
 import br.com.votacao.port.adapters.controller.dto.ResultadoVotacaoDTO
 import br.com.votacao.port.adapters.controller.dto.SessaoDTO
+import br.com.votacao.port.adapters.controller.dto.VotoDTO
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
@@ -32,6 +33,24 @@ class SessaoVotacaoController(
                         .path("/{sessaoId}")
                         .buildAndExpand(sessaoId)
                         .toUri()
+        ).build()
+    }
+
+    @PostMapping("/{sessaoId}/votar")
+    @Operation(summary = "Endpoint responsavel por realizar a votação por uma pauta especifica")
+    fun votar(@PathVariable sessaoId: UUID, @RequestBody voto: VotoDTO): ResponseEntity<Void> {
+
+        val votoId = sessaoVotacaoApplicationService.realizarVoto(
+            sessaoId = sessaoId,
+            voto = voto
+        )
+
+        return ResponseEntity.created(
+            ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{votoId}")
+                .buildAndExpand(votoId)
+                .toUri()
         ).build()
     }
 
