@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:11
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: votacao_service
+      POSTGRES_PASSWORD: votacao_service
+      POSTGRES_DB: votacao_service
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U votacao_service"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    networks:
+      - host
+
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:3.8-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - host
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "node_health_check"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  app:
+    container_name: votacao-service
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - rabbit
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/votacao_service
+      SPRING_DATASOURCE_USERNAME: votacao_service
+      SPRING_DATASOURCE_PASSWORD: votacao_service
+    networks:
+      - host
+
+networks:
+  host:
+    driver: bridge
